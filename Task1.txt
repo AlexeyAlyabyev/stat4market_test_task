@@ -1,0 +1,19 @@
+1. 	SELECT * FROM `users` main_usr 
+	WHERE `posts_qty` > (SELECT `posts_qty` FROM `users` WHERE `id` = main_usr.invited_by_user_id);
+
+2. 	SELECT usr1.id, usr1.group_id, usr1.invited_by_user_id, usr1.name, usr1.posts_qty
+	FROM `users` usr1 
+	JOIN (SELECT `group_id`, MAX(`posts_qty`) AS posts_qty FROM `users` GROUP BY `group_id`) usr2 
+	WHERE usr1.group_id = usr2.group_id AND usr1.posts_qty = usr2.posts_qty;
+
+3.	SELECT grp.id, grp.name FROM `groups` grp
+	JOIN (SELECT `group_id`, COUNT(`group_id`) AS grp_count FROM `users` GROUP BY `group_id`) usr_in_grp
+	WHERE grp.id = usr_in_grp.group_id AND usr_in_grp.grp_count > 10000;
+
+4.	SELECT * FROM `users` main_usrs 
+	WHERE `group_id` <> (SELECT `group_id` FROM `users` WHERE main_usrs.`invited_by_user_id` = `id`);
+
+5.	SELECT grps.id, grps.name, psts_in_grps.psts_sum
+	FROM `groups` grps
+	JOIN (SELECT `group_id`, SUM(`posts_qty`) AS psts_sum FROM `users` GROUP BY `group_id`) psts_in_grps
+	WHERE grps.id = psts_in_grps.group_id;

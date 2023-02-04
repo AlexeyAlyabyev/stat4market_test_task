@@ -1,0 +1,14 @@
+1.	ALTER TABLE `groups` 
+	ADD (column1 int NULL, column2 int NULL, column3 int NULL)
+
+2.1.	ALTER TABLE groups 
+	CHANGE name name1 varchar(50), 
+	ALGORITHM=INPLACE, 
+	LOCK=NONE;
+
+2.2	ALTER TABLE groups 
+	RENAME COLUMN name TO name1;
+
+3.	ALTER TABLE `groups` 
+	ADD INDEX `column1_index` (`column1`),
+	ADD INDEX `column2_index` (`column2`)
